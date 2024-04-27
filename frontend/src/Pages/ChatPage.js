@@ -1,19 +1,36 @@
-import React, { useEffect } from 'react'
-import axios from 'axios';
-const  Chatpage = () => {
-    const fetchChats = async() =>{
-      const data = await axios.get('/api/chat');
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+//for fretching the api from backend to front end we use axios
 
-      console.log(data);
-    }
+const Chatpage = () => {
+  const [chats, setChats] = useState([]);
 
-    useEffect(() =>{
-        fetchChats();
-    },[]);
-    
+  const fetchChats = async () => {
+    const { data } = await axios.get("/api/chat");
+
+    setChats(data);
+    console.log(data);
+  };
+
+  useEffect(() => {
+    fetchChats();
+    console.log("mil gya");
+  }, []);
+
   return (
-    <div>ChatPage</div>
+    <div>
+      {
+        /* {chats.map((chat) => (
+        <div key={chat._id}>{chat.chatName}</div>
+      ))} */
+        chats.map((chat) => (
+          <div key={chat._id}>
+            {chat.chatName}
+          </div>
+        ))
+      }
+    </div>
   );
-}
+};
 
 export default Chatpage;
